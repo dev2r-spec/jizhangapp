@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        applicationId "com.loubii.account"
+        minSdkVersion 14
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        // 开启多 Dex 支持，防止老项目方法数超限
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // 数据库配置
+    greendao {
+        schemaVersion 4
+        targetGenDir 'src/main/java'
+        daoPackage 'com.loubii.account.db'
+    }
+
+    // 开启 DataBinding
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+dependencies {
+    // 使用 implementation 替换旧的 compile
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+
+    // Android Support 库
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support:support-v4:25.3.1'
+    implementation 'com.android.support:design:25.3.1'
+    implementation 'com.android.support:cardview-v7:25.3.1'
+
+    // 注解库
+    implementation 'com.jakewharton:butterknife:8.8.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.0'
+
+    // 数据库 GreenDAO
+    implementation 'org.greenrobot:greendao:3.3.0'
+
+    // 重点修改：将找不到的 2.9.22 修改为 2.9.30
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+
+    // 其他第三方 UI 组件
+    implementation 'com.marshalchen.ultimaterecyclerview:library:0.7.2'
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    implementation 'me.relex:circleindicator:1.2.2@aar'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    // 工具库
+    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'com.yanzhenjie:permission:1.1.2'
+
+    // 本地 Library 模块依赖
+    implementation project(':library:pickerview')
+    implementation project(':library:calendarLibrary')
+    implementation project(':library:leafchart')
+}
+// 强制所有的第三方库都使用 25.3.1 版本的 support 库，解决类冲突
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '25.3.1'
+            }
+        }
+    }
+}

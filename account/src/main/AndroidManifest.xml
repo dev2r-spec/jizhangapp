@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.loubii.account">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
+    <application
+        android:name="com.loubii.account.app.AccountApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:requestLegacyExternalStorage="true">
+
+        <activity android:name="com.loubii.account.ui.avtivity.MainTabActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.loubii.account.ui.avtivity.MainActivity"/>
+        <activity android:name="com.loubii.account.ui.avtivity.BillDetailActivity"/>
+        <activity android:name="com.loubii.account.ui.avtivity.BudgetActivity"/>
+
+        <activity
+            android:name="com.loubii.account.ui.avtivity.AddAccountActivity"
+            android:theme="@style/AddAccountTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <activity android:name="com.loubii.account.ui.avtivity.AddSortActivity"/>
+        <activity android:name="com.loubii.account.ui.avtivity.AddUserDefineActivity"/>
+        <activity android:name="com.loubii.account.ui.avtivity.CalendarActivity"/>
+        <activity android:name="com.loubii.account.ui.card.CardAddActivity"/>
+        <activity android:name="com.loubii.account.ui.card.CardBelongActivity"/>
+        <activity android:name="com.loubii.account.ui.card.TransferActivity"/>
+        <activity android:name="com.loubii.account.ui.avtivity.BalanceActivity"/>
+        <activity android:name="com.loubii.account.ui.card.CardDetailActivity"/>
+        <activity android:name="com.loubii.account.ui.card.CardRemindActivity"/>
+
+        <receiver
+            android:name="com.loubii.account.receiver.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xywallet.xyhd.alarm"/>
+            </intent-filter>
+        </receiver>
+
+        <activity android:name="com.loubii.account.ui.avtivity.RemindManagerActivity"/>
+        <activity android:name="com.loubii.account.ui.avtivity.AccountRemindActivity"/>
+        <activity android:name="com.loubii.account.ui.avtivity.AccountRemindAddActivity"/>
+        <activity android:name="com.loubii.account.ui.avtivity.NewContractActivity"/>
+        <activity android:name="com.loubii.account.ui.avtivity.CalendarContractActivity"/>
+    </application>
+
+</manifest>
